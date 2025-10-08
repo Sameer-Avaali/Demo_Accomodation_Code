@@ -1,11 +1,13 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { Amenity, Listing, HotelStyle } from '../types';
 
-if (!process.env.API_KEY) {
-    throw new Error("API_KEY environment variable not set");
-}
+let ai: GoogleGenAI | null = null;
 
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+// Initialize the AI client only if the API key is available.
+// This prevents the app from crashing on startup if the key isn't set.
+if (process.env.API_KEY) {
+    ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+}
 
 const amenityValues = Object.values(Amenity);
 const hotelStyleValues = Object.values(HotelStyle);
@@ -53,6 +55,10 @@ const responseSchema = {
 
 
 export const generateListings = async (destination: string, checkIn: Date | null, checkOut: Date | null): Promise<{ hotels: Listing[] }> => {
+    // Throw a clear, catchable error if the AI client wasn't initialized.
+    if (!ai) {
+        throw new Error("Gemini API key is not configured. Please set the API_KEY environment variable in your deployment settings.");
+    }
     
     let dateContext = '';
     if (checkIn && checkOut) {

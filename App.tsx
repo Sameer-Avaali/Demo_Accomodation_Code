@@ -83,9 +83,9 @@ const App: React.FC = () => {
     try {
       const result = await generateListings(searchDest, searchCheckIn, searchCheckOut);
       setListings(result.hotels);
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
-      setError('Sorry, we couldn\'t fetch listings. Please try again.');
+      setError(e.message || 'An unexpected error occurred. Please try again.');
     } finally {
       setIsLoading(false);
     }
