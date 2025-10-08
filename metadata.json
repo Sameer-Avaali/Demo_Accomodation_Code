@@ -1,0 +1,5 @@
+{
+  "name": "AI Accommodation Finder",
+  "description": "An AI-powered accommodation finder that generates hotel and motel listings in the style of Airbnb or Agoda for any given destination.",
+  "requestFramePermissions": []
+}
