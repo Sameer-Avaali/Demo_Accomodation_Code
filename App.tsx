@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo, useEffect } from 'react';
 import { Listing, Amenity, User, HotelStyle } from './types';
-import { generateListings } from './services/geminiService';
+import { generateListings } from './services/mistralService';
 import ListingCard from './components/ListingCard';
 import BottomNav from './components/BottomNav';
 import LoginModal from './components/LoginModal';

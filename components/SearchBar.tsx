@@ -76,7 +76,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ destination, setDestination, chec
     }, [checkIn]);
 
     return (
-        <div ref={searchBarRef} className="relative bg-white rounded-full shadow-lg border border-gray-200 flex items-center p-2 w-full max-w-3xl mx-auto my-6">
+        <div ref={searchBarRef} className="bg-white rounded-full shadow-lg border border-gray-200 flex items-center p-2 w-full max-w-3xl mx-auto my-6">
             <div className="flex-grow px-4 py-1 hover:bg-gray-100 rounded-full cursor-pointer">
                 <label className="block text-xs font-bold text-gray-800">Where</label>
                 <input 
@@ -90,7 +90,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ destination, setDestination, chec
                 />
             </div>
             <div className="border-l border-gray-200 h-10 mx-2"></div>
-            <div className="flex-grow px-4 py-1 hover:bg-gray-100 rounded-full cursor-pointer hidden sm:block">
+            <div className="relative flex-grow px-4 py-1 hover:bg-gray-100 rounded-full cursor-pointer hidden sm:block">
                 <label className="block text-xs font-bold text-gray-800">Check in</label>
                 <input 
                     type="text" 
@@ -101,9 +101,17 @@ const SearchBar: React.FC<SearchBarProps> = ({ destination, setDestination, chec
                     className="w-full bg-transparent focus:outline-none text-gray-600 placeholder-gray-400 cursor-pointer"
                     aria-label="Check in date"
                 />
+                {activePicker === 'checkIn' && (
+                    <Calendar 
+                        onSelectDate={handleSelectCheckIn}
+                        minDate={new Date()}
+                        selectedDate={checkIn}
+                        className="absolute top-full mt-2 left-0"
+                    />
+                )}
             </div>
             <div className="border-l border-gray-200 h-10 mx-2 hidden sm:block"></div>
-            <div className="flex-grow px-4 py-1 hover:bg-gray-100 rounded-full cursor-pointer hidden sm:block">
+            <div className="relative flex-grow px-4 py-1 hover:bg-gray-100 rounded-full cursor-pointer hidden sm:block">
                 <label className="block text-xs font-bold text-gray-800">Check out</label>
                 <input 
                     type="text" 
@@ -114,6 +122,14 @@ const SearchBar: React.FC<SearchBarProps> = ({ destination, setDestination, chec
                     className="w-full bg-transparent focus:outline-none text-gray-600 placeholder-gray-400 cursor-pointer"
                     aria-label="Check out date"
                 />
+                {activePicker === 'checkOut' && (
+                    <Calendar 
+                        onSelectDate={handleSelectCheckOut}
+                        minDate={checkOutMinDate}
+                        selectedDate={checkOut}
+                        className="absolute top-full mt-2 left-0"
+                    />
+                )}
             </div>
             <div className="border-l border-gray-200 h-10 mx-2 hidden lg:block"></div>
             <div className="flex-grow px-4 py-1 pr-2 hover:bg-gray-100 rounded-full cursor-pointer hidden lg:flex items-center justify-between">
@@ -153,23 +169,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ destination, setDestination, chec
                     <SearchIcon className="w-6 h-6 text-white" />
                  )}
             </button>
-
-            {activePicker === 'checkIn' && (
-                <Calendar 
-                    onSelectDate={handleSelectCheckIn}
-                    minDate={new Date()}
-                    selectedDate={checkIn}
-                    className="absolute top-[120%] left-1/4"
-                />
-            )}
-            {activePicker === 'checkOut' && (
-                <Calendar 
-                    onSelectDate={handleSelectCheckOut}
-                    minDate={checkOutMinDate}
-                    selectedDate={checkOut}
-                    className="absolute top-[120%] left-1/2"
-                />
-            )}
         </div>
     );
 };
